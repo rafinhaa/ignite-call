@@ -1,15 +1,48 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import { Adapter } from 'next-auth/adapters'
+import { parseCookies, destroyCookie } from 'nookies'
 import { prisma } from '../prisma'
 
-export const PrismaAdapter = (): Adapter => {
+export const PrismaAdapter = (
+  req: NextApiRequest,
+  res: NextApiResponse,
+): Adapter => {
   return {
-    async createUser(user) {},
+    async createUser(user) {
+      const { '@ignitecall:userId': userIdCookies } = parseCookies({ req })
+      if (!userIdCookies) {
+        throw new Error('User id not found on cookies')
+      }
+      const updatedUser = await prisma.user.update({
+        where: {
+          id: userIdCookies,
+        },
+        data: {
+          name: user.name,
+          email: user.email,
+          avatar_url: user.avatar_url,
+        },
+      })
+      destroyCookie({ res }, '@ignitecall:userId', {
+        path: '/',
+      })
+      return {
+        id: updatedUser.id,
+        name: updatedUser.name,
+        username: updatedUser.username,
+        email: updatedUser.email!,
+        emailVerified: null,
+        avatar_url: updatedUser.avatar_url!,
+      }
+    },
     async getUser(id) {
-      const user = await prisma.user.findUniqueOrThrow({
+      const user = await prisma.user.findUnique({
         where: {
           id,
         },
       })
+
+      if (!user) return null
 
       return {
         id: user.id,
@@ -21,11 +54,13 @@ export const PrismaAdapter = (): Adapter => {
       }
     },
     async getUserByEmail(email) {
-      const user = await prisma.user.findUniqueOrThrow({
+      const user = await prisma.user.findUnique({
         where: {
           email,
         },
       })
+
+      if (!user) return null
 
       return {
         id: user.id,
@@ -37,7 +72,7 @@ export const PrismaAdapter = (): Adapter => {
       }
     },
     async getUserByAccount({ providerAccountId, provider }) {
-      const { user } = await prisma.account.findUniqueOrThrow({
+      const account = await prisma.account.findUnique({
         where: {
           provider_provider_account_id: {
             provider_account_id: providerAccountId,
@@ -48,6 +83,10 @@ export const PrismaAdapter = (): Adapter => {
           user: true,
         },
       })
+
+      if (!account) return null
+
+      const { user } = account
 
       return {
         id: user.id,
@@ -129,7 +168,7 @@ export const PrismaAdapter = (): Adapter => {
       }
     },
     async getSessionAndUser(sessionToken) {
-      const { user, ...session } = await prisma.session.findUniqueOrThrow({
+      const getSession = await prisma.session.findUnique({
         where: {
           session_token: sessionToken,
         },
@@ -137,6 +176,10 @@ export const PrismaAdapter = (): Adapter => {
           user: true,
         },
       })
+
+      if (!getSession) return null
+
+      const { user, ...session } = getSession
 
       return {
         session: {
