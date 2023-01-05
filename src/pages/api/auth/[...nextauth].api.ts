@@ -36,6 +36,12 @@ const authObj = (rq: NextApiRequest, rs: NextApiResponse): NextAuthOptions => {
           return '/register/connect-calendar/?error=permissions'
         return true
       },
+      async session({ session, user }) {
+        return {
+          ...session,
+          user,
+        }
+      },
     },
   }
 }
