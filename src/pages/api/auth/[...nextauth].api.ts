@@ -7,7 +7,10 @@ const USER_INFO_EMAIL = 'https://www.googleapis.com/auth/userinfo.email'
 const USER_INFO_PROFILE = 'https://www.googleapis.com/auth/userinfo.profile'
 const CALENDAR = 'https://www.googleapis.com/auth/calendar'
 
-const authObj = (rq: NextApiRequest, rs: NextApiResponse): NextAuthOptions => {
+export const authObj = (
+  rq: NextApiRequest,
+  rs: NextApiResponse,
+): NextAuthOptions => {
   return {
     adapter: PrismaAdapter(rq, rs),
     providers: [
