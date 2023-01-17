@@ -1,8 +1,8 @@
-interface GetWeekDays {
-  short?: boolean;
-}
+/* eslint-disable prettier/prettier */
 
-export const getWeekDays = ({ short }: GetWeekDays) => {
+type GetWeekDays = ( { short }?: { short?: boolean}) => string[]
+
+export const getWeekDays: GetWeekDays = ({ short = false } = {}) => {
   const formatter = new Intl.DateTimeFormat('pt-BR', {
     weekday: 'long',
   })
