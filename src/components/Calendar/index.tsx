@@ -11,6 +11,11 @@ import {
   CalendarTitle,
 } from './styles'
 
+interface CalendarProps {
+  selectedDate: Date | null;
+  onDateSelected: (date: Date) => void;
+}
+
 interface CalendarWeek {
   week: number;
   days: Array<{
@@ -21,7 +26,7 @@ interface CalendarWeek {
 
 type CalendarWeeks = CalendarWeek[]
 
-export const Calendar = () => {
+export const Calendar = ({ selectedDate, onDateSelected }: CalendarProps) => {
   const [currentDate, setCurrentDate] = useState(() => dayjs().set('date', 1))
   const { currentMonth, currentYear } = {
     currentMonth: currentDate.format('MMMM'),
@@ -64,7 +69,10 @@ export const Calendar = () => {
 
     const calendarMonthArray = [
       ...previousMonthFillArray.map((date) => ({ date, disabled: true })),
-      ...daysInMonthArray.map((date) => ({ date, disabled: false })),
+      ...daysInMonthArray.map((date) => ({
+        date,
+        disabled: date.endOf('day').isBefore(new Date()),
+      })),
       ...nextMountFillArray.map((date) => ({ date, disabled: true })),
     ]
 
@@ -84,8 +92,6 @@ export const Calendar = () => {
 
     return calendarWeeksArray
   }, [currentDate])
-
-  console.log(calendarWeeks)
 
   return (
     <CalendarContainer>
@@ -117,7 +123,10 @@ export const Calendar = () => {
             <tr key={week}>
               {days.map(({ date, disabled }) => (
                 <td key={date.toString()}>
-                  <CalendarDay disabled={disabled}>
+                  <CalendarDay
+                    disabled={disabled}
+                    onClick={() => onDateSelected(date.toDate())}
+                  >
                     {date.get('date')}
                   </CalendarDay>
                 </td>
