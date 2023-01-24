@@ -11,9 +11,14 @@ import {
   TimePickerList,
 } from './styles'
 
+interface Availability {
+  possibleTimes: number[];
+  availableTimes: number[];
+}
+
 export const CalendarStep = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
-  const [availability, setAvailability] = useState(null)
+  const [availability, setAvailability] = useState<Availability | null>(null)
   const router = useRouter()
 
   const isDateSelected = !!selectedDate
@@ -32,7 +37,7 @@ export const CalendarStep = () => {
         },
       })
       .then((response) => {
-        console.log(response.data)
+        setAvailability(response.data)
       })
   }, [selectedDate, username])
 
@@ -45,14 +50,16 @@ export const CalendarStep = () => {
             {weekDay} <span>{describedDate}</span>
           </TimePickerHeader>
           <TimePickerList>
-            <TimePickerItem>08:00h</TimePickerItem>
-            <TimePickerItem>09:00h</TimePickerItem>
-            <TimePickerItem>10:00h</TimePickerItem>
-            <TimePickerItem>11:00h</TimePickerItem>
-            <TimePickerItem>12:00h</TimePickerItem>
-            <TimePickerItem>13:00h</TimePickerItem>
-            <TimePickerItem>14:00h</TimePickerItem>
-            <TimePickerItem>15:00h</TimePickerItem>
+            {availability?.possibleTimes.map((hour) => {
+              const formattedHour = String(hour).padStart(2, '0')
+              const disabled = !availability?.availableTimes.includes(hour)
+              return (
+                <TimePickerItem
+                  key={hour}
+                  disabled={disabled}
+                >{`${formattedHour}:00h`}</TimePickerItem>
+              )
+            })}
           </TimePickerList>
         </TimePicker>
       )}

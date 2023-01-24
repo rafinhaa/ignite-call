@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { prisma } from '../../../../lib/prisma'
 
-const NO_AVAILABILITY = { availability: [] }
+const NO_AVAILABILITY = { possibleTimes: [], availableTimes: [] }
 
 export default async function handler(
   req: NextApiRequest,
