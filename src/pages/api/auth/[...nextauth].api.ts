@@ -9,7 +9,7 @@ const CALENDAR = 'https://www.googleapis.com/auth/calendar'
 
 export const authObj = (
   rq: NextApiRequest | NextPageContext['req'],
-  rs: NextApiResponse | NextPageContext['res'],
+  rs: NextApiResponse | NextPageContext['res']
 ): NextAuthOptions => {
   return {
     adapter: PrismaAdapter(rq, rs),
@@ -19,6 +19,9 @@ export const authObj = (
         clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
         authorization: {
           params: {
+            prompt: 'consent',
+            access_type: 'offline',
+            response_type: 'code',
             scope: `${USER_INFO_EMAIL} ${USER_INFO_PROFILE} ${CALENDAR}`,
           },
         },
