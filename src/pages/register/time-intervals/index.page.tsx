@@ -25,6 +25,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { convertTimeStringToMinutes } from '../../../utils/convert-time-string-to-minutes'
 import { api } from '../../../lib/axios'
 import { useRouter } from 'next/router'
+import { NextSeo } from 'next-seo'
 
 const timeIntervalsFormSchema = z.object({
   intervals: z
@@ -34,7 +35,7 @@ const timeIntervalsFormSchema = z.object({
         enabled: z.boolean(),
         startTime: z.string(),
         endTime: z.string(),
-      }),
+      })
     )
     .length(7)
     .transform((intervals) => intervals.filter((interval) => interval.enabled))
@@ -48,19 +49,19 @@ const timeIntervalsFormSchema = z.object({
           startTimeInMinutes: convertTimeStringToMinutes(interval.startTime),
           endTimeInMinutes: convertTimeStringToMinutes(interval.endTime),
         }
-      }),
+      })
     )
     .refine(
       (intervals) => {
         return intervals.every(
           (interval) =>
-            interval.endTimeInMinutes - 60 >= interval.startTimeInMinutes,
+            interval.endTimeInMinutes - 60 >= interval.startTimeInMinutes
         )
       },
       {
         message:
           'O horário do termino deve ter pelo menos 1 hora a mais do horário de início!',
-      },
+      }
     ),
 })
 
@@ -99,7 +100,7 @@ const TimeIntervals = () => {
   const router = useRouter()
 
   const handleSetTimeIntervals = async (
-    data: any | TimeIntervalsFormOutput,
+    data: any | TimeIntervalsFormOutput
   ) => {
     const { intervals } = data
     await api.post('users/time-intervals', {
@@ -167,6 +168,7 @@ const TimeIntervals = () => {
           <ArrowRight />
         </Button>
       </IntervalBox>
+      <NextSeo title="Selecione sua disponibilidade | Ignite Call" noindex />
     </Container>
   )
 }
