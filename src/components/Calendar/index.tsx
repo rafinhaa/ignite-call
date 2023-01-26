@@ -15,23 +15,23 @@ import {
 } from './styles'
 
 interface CalendarProps {
-  selectedDate: Date | null;
-  onDateSelected: (date: Date) => void;
+  selectedDate: Date | null
+  onDateSelected: (date: Date) => void
 }
 
 interface CalendarWeek {
-  week: number;
+  week: number
   days: Array<{
-    date: dayjs.Dayjs,
-    disabled: boolean,
-  }>;
+    date: dayjs.Dayjs
+    disabled: boolean
+  }>
 }
 
 type CalendarWeeks = CalendarWeek[]
 
 interface BlockedDates {
-  blockedWeekDays: number[];
-  blockedDates: number[];
+  blockedWeekDays: number[]
+  blockedDates: number[]
 }
 
 export const Calendar = ({ selectedDate, onDateSelected }: CalendarProps) => {
@@ -65,7 +65,7 @@ export const Calendar = ({ selectedDate, onDateSelected }: CalendarProps) => {
       })
 
       return data
-    }
+    },
   )
 
   const calendarWeeks = useMemo(() => {
@@ -84,7 +84,7 @@ export const Calendar = ({ selectedDate, onDateSelected }: CalendarProps) => {
 
     const lastDayInCurrentMonth = currentDate.set(
       'date',
-      currentDate.daysInMonth()
+      currentDate.daysInMonth(),
     )
 
     const lastWeekDay = lastDayInCurrentMonth.get('day')
@@ -116,7 +116,7 @@ export const Calendar = ({ selectedDate, onDateSelected }: CalendarProps) => {
         }
         return weeks
       },
-      []
+      [],
     )
 
     return calendarWeeksArray

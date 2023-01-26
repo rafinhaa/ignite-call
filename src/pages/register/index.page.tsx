@@ -54,7 +54,7 @@ const Register = () => {
 
   useEffect(() => {
     if (!router.query?.username) return
-    setValue('username', router.query.username as string)
+    setValue('username', String(router.query.username))
   }, [router.query.username, setValue])
 
   return (
@@ -92,9 +92,7 @@ const Register = () => {
           Próximo passo <ArrowRight />
         </Button>
       </Form>
-      <NextSeo
-        title='Crie uma conta | Ignite Call'
-      />
+      <NextSeo title="Crie uma conta | Ignite Call" />
     </Container>
   )
 }

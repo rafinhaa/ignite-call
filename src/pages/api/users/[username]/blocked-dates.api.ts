@@ -1,10 +1,9 @@
-import dayjs from 'dayjs'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { prisma } from '../../../../lib/prisma'
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   if (req.method !== 'GET') {
     return res.status(405).end()
@@ -42,7 +41,7 @@ export default async function handler(
     .map((_, index) => index)
     .filter((weekday) => {
       return !availableWeekDays.some(
-        (availableWeekDay) => availableWeekDay.week_day === weekday
+        (availableWeekDay) => availableWeekDay.week_day === weekday,
       )
     })
 

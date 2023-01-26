@@ -30,9 +30,9 @@ export const PrismaAdapter = (
         id: updatedUser.id,
         name: updatedUser.name,
         username: updatedUser.username,
-        email: updatedUser.email!,
+        email: String(updatedUser.email),
         emailVerified: null,
-        avatar_url: updatedUser.avatar_url!,
+        avatar_url: String(updatedUser.avatar_url),
       }
     },
     async getUser(id) {
@@ -48,9 +48,9 @@ export const PrismaAdapter = (
         id: user.id,
         name: user.name,
         username: user.username,
-        email: user.email!,
+        email: String(user.email),
         emailVerified: null,
-        avatar_url: user.avatar_url!,
+        avatar_url: String(user.avatar_url),
       }
     },
     async getUserByEmail(email) {
@@ -66,9 +66,9 @@ export const PrismaAdapter = (
         id: user.id,
         name: user.name,
         username: user.username,
-        email: user.email!,
+        email: String(user.email),
         emailVerified: null,
-        avatar_url: user.avatar_url!,
+        avatar_url: String(user.avatar_url),
       }
     },
     async getUserByAccount({ providerAccountId, provider }) {
@@ -92,9 +92,9 @@ export const PrismaAdapter = (
         id: user.id,
         name: user.name,
         username: user.username,
-        email: user.email!,
+        email: String(user.email),
         emailVerified: null,
-        avatar_url: user.avatar_url!,
+        avatar_url: String(user.avatar_url),
       }
     },
     async updateUser(user) {
@@ -113,9 +113,9 @@ export const PrismaAdapter = (
         id: updatedUser.id,
         name: updatedUser.name,
         username: updatedUser.username,
-        email: updatedUser.email!,
+        email: String(updatedUser.email),
         emailVerified: null,
-        avatar_url: updatedUser.avatar_url!,
+        avatar_url: String(updatedUser.avatar_url),
       }
     },
     async deleteUser(userId) {
@@ -129,9 +129,9 @@ export const PrismaAdapter = (
         id: user.id,
         name: user.name,
         username: user.username,
-        email: user.email!,
+        email: String(user.email),
         emailVerified: null,
-        avatar_url: user.avatar_url!,
+        avatar_url: String(user.avatar_url),
       }
     },
     async linkAccount(account) {
@@ -191,9 +191,9 @@ export const PrismaAdapter = (
           id: user.id,
           name: user.name,
           username: user.username,
-          email: user.email!,
+          email: String(user.email),
           emailVerified: null,
-          avatar_url: user.avatar_url!,
+          avatar_url: String(user.avatar_url),
         },
       }
     },

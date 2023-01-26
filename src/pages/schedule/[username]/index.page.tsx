@@ -7,10 +7,10 @@ import { Container, UserHeader } from './styles'
 
 interface ScheduleProps {
   user: {
-    name: string,
-    bio: string,
-    avatarUrl: string,
-  };
+    name: string
+    bio: string
+    avatarUrl: string
+  }
 }
 
 const Schedule = ({ user: { name, bio, avatarUrl } }: ScheduleProps) => {

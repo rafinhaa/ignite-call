@@ -9,7 +9,7 @@ const CALENDAR = 'https://www.googleapis.com/auth/calendar'
 
 export const authObj = (
   rq: NextApiRequest | NextPageContext['req'],
-  rs: NextApiResponse | NextPageContext['res']
+  rs: NextApiResponse | NextPageContext['res'],
 ): NextAuthOptions => {
   return {
     adapter: PrismaAdapter(rq, rs),

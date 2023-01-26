@@ -7,7 +7,7 @@ import { prisma } from '../../../../lib/prisma'
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   if (req.method !== 'POST') {
     return res.status(405).end()
@@ -33,7 +33,7 @@ export default async function handler(
   })
 
   const { name, email, observations, date } = createSchedulingBody.parse(
-    req.body
+    req.body,
   )
 
   const schedulingDate = dayjs(date).startOf('hour')

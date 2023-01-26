@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import { useRouter } from 'next/router'
 import { CalendarBlank, Clock } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
-import { date, z } from 'zod'
+import { z } from 'zod'
 import { api } from '../../../../../lib/axios'
 import { ConfirmForm, FormActions, FormError, FormHeader } from './styles'
 
@@ -17,8 +17,8 @@ const confirmFormSchema = z.object({
 type ConfirmFormData = z.infer<typeof confirmFormSchema>
 
 interface ConfirmStepProps {
-  schedulingDate: Date | null;
-  onCancelConfirmation: () => void;
+  schedulingDate: Date | null
+  onCancelConfirmation: () => void
 }
 
 export function ConfirmStep({

@@ -13,12 +13,12 @@ import {
 } from './styles'
 
 interface Availability {
-  possibleTimes: number[];
-  availableTimes: number[];
+  possibleTimes: number[]
+  availableTimes: number[]
 }
 
 interface CalendarStepProps {
-  onSelectDateTime: (date: Date) => void;
+  onSelectDateTime: (date: Date) => void
 }
 
 export const CalendarStep = ({ onSelectDateTime }: CalendarStepProps) => {
@@ -48,7 +48,7 @@ export const CalendarStep = ({ onSelectDateTime }: CalendarStepProps) => {
     },
     {
       enabled: !!isDateSelected,
-    }
+    },
   )
 
   const handleSelectTime = (hour: number) => {
